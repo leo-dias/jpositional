@@ -1,19 +1,20 @@
 package br.org.beanpositional.bean;
 
-import br.org.beanpositional.BeanFieldPositional;
-import br.org.beanpositional.BeanFieldPositionalList;
+import br.org.beanpositional.HeaderPosition;
+import br.org.beanpositional.BodyPosition;
+import br.org.beanpositional.TraillerPosition;
 
 import java.util.List;
 
 public class ConsigSiape {
 
-    @BeanFieldPositional(type = "0")
+    @HeaderPosition(type = "0")
     private Header header;
 
-    @BeanFieldPositionalList(type = "1")
+    @BodyPosition(type = "1")
     private List<Consignacao> consignacaoList;
 
-    @BeanFieldPositional(type = "9")
+    @TraillerPosition(type = "9")
     private Trailler trailler;
 
     public Header getHeader() {

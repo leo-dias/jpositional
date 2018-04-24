@@ -11,7 +11,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ElementType.FIELD})
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
-public @interface BeanFieldPositional {
+public @interface TraillerPosition {
 
     Class<?>[] groups() default {};
 

@@ -33,8 +33,8 @@ class ParseFromFile {
     }
 
     private <T> void processBeanField(String sb, T rootBean, Field f) throws Exception {
-        BeanFieldPositional beanFieldPositional = f.getAnnotation(BeanFieldPositional.class);
-        if (beanFieldPositional != null && beanFieldPositional.type().equals(sb.substring(0, 1))) {
+        HeaderPosition headerPosition = f.getAnnotation(HeaderPosition.class);
+        if (headerPosition != null && headerPosition.type().equals(sb.substring(0, 1))) {
             Class c = f.getType();
             Object obj = createInstance(c);
             fillObject(c, c.getDeclaredFields(), sb, obj);
@@ -45,8 +45,8 @@ class ParseFromFile {
     }
 
     private <T> void processBeanFieldList(List list, String sb, T rootBean, Field f) throws Exception {
-        BeanFieldPositionalList beanFieldPositionalList = f.getAnnotation(BeanFieldPositionalList.class);
-        if (beanFieldPositionalList != null && beanFieldPositionalList.type().equals(sb.substring(0, 1))) {
+        BodyPosition bodyPosition = f.getAnnotation(BodyPosition.class);
+        if (bodyPosition != null && bodyPosition.type().equals(sb.substring(0, 1))) {
             ParameterizedType type = (ParameterizedType) f.getGenericType();
             Class<?> referenceType = (Class<?>) type.getActualTypeArguments()[0];
 
