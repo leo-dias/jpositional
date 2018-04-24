@@ -17,5 +17,5 @@ public @interface BeanFieldPositional {
 
     Class<? extends Payload>[] payload() default {};
 
-    String className();
+    String type();
 }

@@ -8,14 +8,13 @@ public class ConsigSiapeTest {
     @Test
     public void lerPosicoes() {
 
-
-        ParseFromFile parseFromFile = new ParseFromFile();
         try {
-            ConsigSiape consigSiape = parseFromFile.parse(ConsigSiape.class);
+            BeanPositional beanPositional = new BeanPositional();
+            ConsigSiape consigSiape = beanPositional.parseFromFile(ConsigSiape.class, "etc/txt/2018-04-10.txt");
+            System.out.println(consigSiape);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
     }
 

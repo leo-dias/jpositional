@@ -1,18 +1,19 @@
 package br.org.beanpositional.bean;
 
 import br.org.beanpositional.BeanFieldPositional;
-import br.org.beanpositional.BeanRootPositional;
+import br.org.beanpositional.BeanFieldPositionalList;
 
-@BeanRootPositional(className = "br.org.beanpositional.bean.ConsigSiape")
+import java.util.List;
+
 public class ConsigSiape {
 
-    @BeanFieldPositional(className = "br.org.beanpositional.bean.Header")
+    @BeanFieldPositional(type = "0")
     private Header header;
 
-    @BeanFieldPositional(className = "br.org.beanpositional.bean.Consignacao")
-    private Consignacao consignacao;
+    @BeanFieldPositionalList(type = "1")
+    private List<Consignacao> consignacaoList;
 
-    @BeanFieldPositional(className = "br.org.beanpositional.bean.Trailler")
+    @BeanFieldPositional(type = "9")
     private Trailler trailler;
 
     public Header getHeader() {
@@ -23,12 +24,12 @@ public class ConsigSiape {
         this.header = header;
     }
 
-    public Consignacao getConsignacao() {
-        return consignacao;
+    public List<Consignacao> getConsignacaoList() {
+        return consignacaoList;
     }
 
-    public void setConsignacao(Consignacao consignacao) {
-        this.consignacao = consignacao;
+    public void setConsignacaoList(List<Consignacao> consignacaoList) {
+        this.consignacaoList = consignacaoList;
     }
 
     public Trailler getTrailler() {
