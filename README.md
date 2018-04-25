@@ -177,14 +177,14 @@ Below an example how to generate a positional file from bean.
     myRoot.setMyTrailer(myTrailer);
 
     BeanPositional beanPositional = new BeanPositional();
-    beanPositional.parseToFile(myRoot, "/home/usuer/my-positional-file.txt");
+    beanPositional.parseToFile(myRoot, "/home/user/my-positional-file.txt");
 ```
 
 ## Generating Positional File
 Below an example how to read a positional file.
 ```java
     BeanPositional beanPositional = new BeanPositional();
-    MyRoot myRoot = beanPositional.parseFromFile(MyRoot.class, "/home/usuer/my-positional-file.txt");
+    MyRoot myRoot = beanPositional.parseFromFile(MyRoot.class, "/home/user/my-positional-file.txt");
 ```
 
 ## Author
