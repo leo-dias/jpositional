@@ -1,82 +1,82 @@
-package br.org.beanpositional.bean;
+package br.org.jpositional.bean;
 
-import br.org.beanpositional.Position;
+import br.org.jpositional.LinePosition;
 
 public class Consignacao {
 
-    @Position(begin = 0, end = 1)
+    @LinePosition(begin = 0, end = 1)
     private String tipoRegistro;
 
-    @Position(begin = 1, end = 6)
+    @LinePosition(begin = 1, end = 6)
     private String codigoOrgaoSIAPE;
 
-    @Position(begin = 6, end = 13)
+    @LinePosition(begin = 6, end = 13)
     private String matricula;
 
-    @Position(begin = 13, end = 14)
+    @LinePosition(begin = 13, end = 14)
     private String dvMatricula;
 
-    @Position(begin = 14, end = 15)
+    @LinePosition(begin = 14, end = 15)
     private String comando;
 
-    @Position(begin = 15, end = 16)
+    @LinePosition(begin = 15, end = 16)
     private String indicador;
 
-    @Position(begin = 16, end = 21)
+    @LinePosition(begin = 16, end = 21)
     private String rubrica;
 
-    @Position(begin = 21, end = 33)
+    @LinePosition(begin = 21, end = 33)
     private String valor;
 
-    @Position(begin = 33, end = 36)
+    @LinePosition(begin = 33, end = 36)
     private String prazo;
 
-    @Position(begin = 36, end = 44)
+    @LinePosition(begin = 36, end = 44)
     private String numeroOrigem;
 
-    @Position(begin = 44, end = 46)
+    @LinePosition(begin = 44, end = 46)
     private String mesRubrica;
 
-    @Position(begin = 46, end = 50)
+    @LinePosition(begin = 46, end = 50)
     private String anoRubrica;
 
-    @Position(begin = 50, end = 58)
+    @LinePosition(begin = 50, end = 58)
     private String dataAntiguidade;
 
-    @Position(begin = 58, end = 64)
+    @LinePosition(begin = 58, end = 64)
     private String horaMinutoSegundoAntiguidade;
 
-    @Position(begin = 64, end = 69)
+    @LinePosition(begin = 64, end = 69)
     private String filler;
 
-    @Position(begin = 69, end = 70)
+    @LinePosition(begin = 69, end = 70)
     private String movFina;
 
-    @Position(begin = 70, end = 90)
+    @LinePosition(begin = 70, end = 90)
     private String numeroContrato;
 
-    @Position(begin = 90, end = 92)
+    @LinePosition(begin = 90, end = 92)
     private String assuntoCalculoParametrizado;
 
-    @Position(begin = 92, end = 97)
+    @LinePosition(begin = 92, end = 97)
     private String percentual;
 
-    @Position(begin = 97, end = 102)
+    @LinePosition(begin = 97, end = 102)
     private String rubricaCalculo1;
 
-    @Position(begin = 102, end = 107)
+    @LinePosition(begin = 102, end = 107)
     private String rubricaCalculo2;
 
-    @Position(begin = 107, end = 112)
+    @LinePosition(begin = 107, end = 112)
     private String rubricaCalculo3;
 
-    @Position(begin = 112, end = 117)
+    @LinePosition(begin = 112, end = 117)
     private String rubricaCalculo4;
 
-    @Position(begin = 117, end = 122)
+    @LinePosition(begin = 117, end = 122)
     private String rubricaCalculo5;
 
-    @Position(begin = 122, end = 127)
+    @LinePosition(begin = 122, end = 127)
     private String rubricaCalculo6;
 
     public String getTipoRegistro() {

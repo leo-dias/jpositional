@@ -1,21 +1,21 @@
-package br.org.beanpositional.bean;
+package br.org.jpositional.bean;
 
-import br.org.beanpositional.HeaderPosition;
-import br.org.beanpositional.BodyPosition;
-import br.org.beanpositional.TraillerPosition;
+import br.org.jpositional.HeaderPosition;
+import br.org.jpositional.BodyPosition;
+import br.org.jpositional.TrailerPosition;
 
 import java.util.List;
 
 public class ConsigSiape {
 
-    @HeaderPosition(type = "0")
+    @HeaderPosition(identify = "0")
     private Header header;
 
-    @BodyPosition(type = "1")
+    @BodyPosition(identify = "1")
     private List<Consignacao> consignacaoList;
 
-    @TraillerPosition(type = "9")
-    private Trailler trailler;
+    @TrailerPosition(identify = "9")
+    private Trailer trailer;
 
     public Header getHeader() {
         return header;
@@ -33,11 +33,11 @@ public class ConsigSiape {
         this.consignacaoList = consignacaoList;
     }
 
-    public Trailler getTrailler() {
-        return trailler;
+    public Trailer getTrailer() {
+        return trailer;
     }
 
-    public void setTrailler(Trailler trailler) {
-        this.trailler = trailler;
+    public void setTrailer(Trailer trailer) {
+        this.trailer = trailer;
     }
 }

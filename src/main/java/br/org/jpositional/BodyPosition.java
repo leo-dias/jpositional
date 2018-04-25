@@ -1,23 +1,25 @@
-package br.org.beanpositional;
+package br.org.jpositional;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({FIELD})
+/**
+ * @author Leonardo Dias de Oliveira
+ */
+
+@Target({ElementType.FIELD})
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
-public @interface Position {
+public @interface BodyPosition {
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    int begin();
-
-    int end();
+    String identify();
 }
