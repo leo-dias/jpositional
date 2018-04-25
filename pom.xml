@@ -6,7 +6,7 @@
 
     <groupId>jpositional</groupId>
     <artifactId>br.org.jpositional</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
@@ -40,5 +40,11 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>maven-repository</id>
+            <url>file://${project.build.directory}</url>
+        </repository>
+    </distributionManagement>
 
 </project>
