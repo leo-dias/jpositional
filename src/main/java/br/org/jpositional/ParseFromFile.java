@@ -38,13 +38,13 @@ class ParseFromFile {
     }
 
     private <T> void processBeanField(String sb, T rootBean, Field f) throws Exception {
-        HeaderPosition headerPosition = f.getAnnotation(HeaderPosition.class);
-        if (headerPosition != null && headerPosition.identify().equals(sb.substring(0, 1))) {
+        Header header = f.getAnnotation(Header.class);
+        if (header != null && header.identify().equals(sb.substring(0, 1))) {
             process(sb, rootBean, f);
         }
 
-        TrailerPosition trailerPosition = f.getAnnotation(TrailerPosition.class);
-        if (trailerPosition != null && trailerPosition.identify().equals(sb.substring(0, 1))) {
+        Trailer trailer = f.getAnnotation(Trailer.class);
+        if (trailer != null && trailer.identify().equals(sb.substring(0, 1))) {
             process(sb, rootBean, f);
         }
     }
@@ -59,8 +59,8 @@ class ParseFromFile {
     }
 
     private <T> void processBeanFieldList(List list, String sb, T rootBean, Field f) throws Exception {
-        BodyPosition bodyPosition = f.getAnnotation(BodyPosition.class);
-        if (bodyPosition != null && bodyPosition.identify().equals(sb.substring(0, 1))) {
+        Detail detail = f.getAnnotation(Detail.class);
+        if (detail != null && detail.identify().equals(sb.substring(0, 1))) {
             ParameterizedType type = (ParameterizedType) f.getGenericType();
             Class<?> referenceType = (Class<?>) type.getActualTypeArguments()[0];
 
@@ -88,11 +88,11 @@ class ParseFromFile {
 
     private void fillObject(Class<?> classe, Field[] fields, String sb, Object obj) throws NoSuchFieldException, IllegalAccessException {
         for (Field f2 : fields) {
-            LinePosition linePosition = f2.getAnnotation(LinePosition.class);
-            if (linePosition != null) {
+            Line line = f2.getAnnotation(Line.class);
+            if (line != null) {
                 Field field = classe.getDeclaredField(f2.getName());
                 field.setAccessible(true);
-                field.set(obj, sb.substring(linePosition.begin(), linePosition.end()));
+                field.set(obj, sb.substring(line.begin(), line.end()));
             }
         }
     }

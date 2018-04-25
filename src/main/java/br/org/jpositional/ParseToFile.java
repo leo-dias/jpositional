@@ -11,7 +11,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Leonardo Dias de Oliveira
@@ -25,9 +24,9 @@ class ParseToFile {
         Field[] fields = object.getClass().getDeclaredFields();
         try (FileWriter fw = new FileWriter(filePath)) {
             Arrays.stream(fields).forEach(field -> {
-                write(object, field, field.getAnnotation(HeaderPosition.class), fw);
-                write(object, field, field.getAnnotation(BodyPosition.class), fw);
-                write(object, field, field.getAnnotation(TrailerPosition.class), fw);
+                write(object, field, field.getAnnotation(Header.class), fw);
+                write(object, field, field.getAnnotation(Detail.class), fw);
+                write(object, field, field.getAnnotation(Trailer.class), fw);
             });
         }
     }
@@ -64,16 +63,16 @@ class ParseToFile {
 
     private void writeFromFields(FileWriter fw, Object object, Field[] fields) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException {
         for (Field field : fields) {
-            LinePosition linePosition = field.getDeclaredAnnotation(LinePosition.class);
-            if (linePosition != null) {
+            Line line = field.getDeclaredAnnotation(Line.class);
+            if (line != null) {
                 Method methodHeader = object.getClass().getDeclaredMethod(methodGetName(field));
                 Object invoked = methodHeader.invoke(object);
                 if (invoked != null) {
                     String value = invoked.toString();
-                    int size = linePosition.end() - linePosition.begin();
+                    int size = line.end() - line.begin();
                     validateMaxSize(field, value, size);
-                    if (!linePosition.fill().isEmpty()) {
-                        value = fill(value, linePosition.fill(), size, linePosition.direction());
+                    if (!line.fill().isEmpty()) {
+                        value = fill(value, line.fill(), size, line.direction());
                     }
                     validateCorrectSize(field, value, size);
                     fw.write(value);

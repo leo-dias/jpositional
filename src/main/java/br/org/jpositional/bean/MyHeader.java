@@ -1,38 +1,38 @@
 package br.org.jpositional.bean;
 
 import br.org.jpositional.Direction;
-import br.org.jpositional.LinePosition;
+import br.org.jpositional.Line;
 
-public class Header {
+public class MyHeader {
 
-    @LinePosition(begin = 0, end = 1)
+    @Line(begin = 0, end = 1)
     private String tipoRegistro;
 
-    @LinePosition(begin = 1, end = 6)
+    @Line(begin = 1, end = 6)
     private String codigoSiape;
 
-    @LinePosition(begin = 6, end = 22, fill = "0")
+    @Line(begin = 6, end = 22, fill = "0")
     private String constanteZeros;
 
-    @LinePosition(begin = 22, end = 24)
+    @Line(begin = 22, end = 24)
     private String mesPagamento;
 
-    @LinePosition(begin = 24, end = 28)
+    @Line(begin = 24, end = 28)
     private String anoPagamento;
 
-    @LinePosition(begin = 28, end = 34, fill = " ")
+    @Line(begin = 28, end = 34, fill = " ")
     private String nomeFantasia;
 
-    @LinePosition(begin = 34, end = 49, fill = " ")
+    @Line(begin = 34, end = 49, fill = " ")
     private String espacoBranco;
 
-    @LinePosition(begin = 49, end = 63, fill = "0", direction = Direction.LEFT)
+    @Line(begin = 49, end = 63, fill = "0", direction = Direction.LEFT)
     private String cnpjConsignataria;
 
-    @LinePosition(begin = 63, end = 74)
+    @Line(begin = 63, end = 74)
     private String nomeArquivo;
 
-    @LinePosition(begin = 74, end = 127, fill = " ")
+    @Line(begin = 74, end = 127, fill = " ")
     private String filler;
 
     public String getTipoRegistro() {

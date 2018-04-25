@@ -1,82 +1,82 @@
 package br.org.jpositional.bean;
 
-import br.org.jpositional.LinePosition;
+import br.org.jpositional.Line;
 
-public class Consignacao {
+public class MyDetail {
 
-    @LinePosition(begin = 0, end = 1)
+    @Line(begin = 0, end = 1)
     private String tipoRegistro;
 
-    @LinePosition(begin = 1, end = 6)
+    @Line(begin = 1, end = 6)
     private String codigoOrgaoSIAPE;
 
-    @LinePosition(begin = 6, end = 13)
+    @Line(begin = 6, end = 13)
     private String matricula;
 
-    @LinePosition(begin = 13, end = 14)
+    @Line(begin = 13, end = 14)
     private String dvMatricula;
 
-    @LinePosition(begin = 14, end = 15)
+    @Line(begin = 14, end = 15)
     private String comando;
 
-    @LinePosition(begin = 15, end = 16)
+    @Line(begin = 15, end = 16)
     private String indicador;
 
-    @LinePosition(begin = 16, end = 21)
+    @Line(begin = 16, end = 21)
     private String rubrica;
 
-    @LinePosition(begin = 21, end = 33)
+    @Line(begin = 21, end = 33)
     private String valor;
 
-    @LinePosition(begin = 33, end = 36)
+    @Line(begin = 33, end = 36)
     private String prazo;
 
-    @LinePosition(begin = 36, end = 44)
+    @Line(begin = 36, end = 44)
     private String numeroOrigem;
 
-    @LinePosition(begin = 44, end = 46)
+    @Line(begin = 44, end = 46)
     private String mesRubrica;
 
-    @LinePosition(begin = 46, end = 50)
+    @Line(begin = 46, end = 50)
     private String anoRubrica;
 
-    @LinePosition(begin = 50, end = 58)
+    @Line(begin = 50, end = 58)
     private String dataAntiguidade;
 
-    @LinePosition(begin = 58, end = 64)
+    @Line(begin = 58, end = 64)
     private String horaMinutoSegundoAntiguidade;
 
-    @LinePosition(begin = 64, end = 69)
+    @Line(begin = 64, end = 69)
     private String filler;
 
-    @LinePosition(begin = 69, end = 70)
+    @Line(begin = 69, end = 70)
     private String movFina;
 
-    @LinePosition(begin = 70, end = 90)
+    @Line(begin = 70, end = 90)
     private String numeroContrato;
 
-    @LinePosition(begin = 90, end = 92)
+    @Line(begin = 90, end = 92)
     private String assuntoCalculoParametrizado;
 
-    @LinePosition(begin = 92, end = 97)
+    @Line(begin = 92, end = 97)
     private String percentual;
 
-    @LinePosition(begin = 97, end = 102)
+    @Line(begin = 97, end = 102)
     private String rubricaCalculo1;
 
-    @LinePosition(begin = 102, end = 107)
+    @Line(begin = 102, end = 107)
     private String rubricaCalculo2;
 
-    @LinePosition(begin = 107, end = 112)
+    @Line(begin = 107, end = 112)
     private String rubricaCalculo3;
 
-    @LinePosition(begin = 112, end = 117)
+    @Line(begin = 112, end = 117)
     private String rubricaCalculo4;
 
-    @LinePosition(begin = 117, end = 122)
+    @Line(begin = 117, end = 122)
     private String rubricaCalculo5;
 
-    @LinePosition(begin = 122, end = 127)
+    @Line(begin = 122, end = 127)
     private String rubricaCalculo6;
 
     public String getTipoRegistro() {

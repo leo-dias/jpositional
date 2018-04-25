@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ElementType.FIELD})
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
-public @interface BodyPosition {
+public @interface Header {
 
     Class<?>[] groups() default {};
 

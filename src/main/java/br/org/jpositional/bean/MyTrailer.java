@@ -1,23 +1,23 @@
 package br.org.jpositional.bean;
 
 import br.org.jpositional.Direction;
-import br.org.jpositional.LinePosition;
+import br.org.jpositional.Line;
 
-public class Trailer {
+public class MyTrailer {
 
-    @LinePosition(begin = 0, end = 1)
+    @Line(begin = 0, end = 1)
     private String tipoRegistro;
 
-    @LinePosition(begin = 1, end = 6)
+    @Line(begin = 1, end = 6)
     private String orgaoSIAPE;
 
-    @LinePosition(begin = 6, end = 22)
+    @Line(begin = 6, end = 22)
     private String constanteNoves;
 
-    @LinePosition(begin = 22, end = 29, fill = "0", direction = Direction.LEFT)
+    @Line(begin = 22, end = 29, fill = "0", direction = Direction.LEFT)
     private String quantidadeRegistros;
 
-    @LinePosition(begin = 29, end = 127)
+    @Line(begin = 29, end = 127)
     private String filler;
 
     public String getTipoRegistro() {

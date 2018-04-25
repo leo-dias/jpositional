@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({FIELD})
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
-public @interface LinePosition {
+public @interface Line {
 
     Class<?>[] groups() default {};
 
