@@ -70,7 +70,7 @@ each one has unique identification.
 public class MyHeader {
 
     @Line(begin = 0, end = 1)
-    private String id;
+    private String identify;
     
     @Line(begin = 1, end = 20, fill=" ", direction = Direction.RIGHT)
     private String companyName;
@@ -85,7 +85,7 @@ public class MyHeader {
 public class MyDetail {
 
     @Line(begin = 0, end = 1)
-    private String id;
+    private String identify;
     
     @Line(begin = 1, end = 10, fill="0", direction = Direction.LEFT)
     private String totalReceived;
@@ -109,7 +109,7 @@ public class MyDetail {
 public class MyTrailer {
 
     @Line(begin = 0, end = 1)
-    private String id;
+    private String identify;
     
     @Line(begin = 1, end = 5, fill="0", direction = Direction.LEFT)
     private String amountRecord;
@@ -146,6 +146,46 @@ if an attribute is configured like below and the attribute is receiving a String
 ```
 To fix this, you need to review your String.
 
+## Generating Positional File
+Below an example how to generate a positional file from bean.
+```java
+    MyHeader myHeader = new MyHeader();
+    myHeader.setIdentify("0");
+    myHeader.setCompanyName("My Company");
+    
+    MyDetail myDetail1 = new MyDetail();
+    myDetail1.setIdentify("1");
+    myDetail1.setMonth("01");
+    myDetail1.setYear("2018");
+         
+    MyDetail myDetail2 = new MyDetail();
+    myDetail2.setIdentify("1");
+    myDetail2.setMonth("02");
+    myDetail2.setYear("2018");
+    
+    List<MyDetail> detailList = new ArrayList<>();
+    detailList.add(myDetail1);
+    detailList.add(myDetail2);
+    
+    Trailer trailer = new Trailer();
+    trailer.setIdentify("9");
+    trailer.setAmountRecord("2");
+     
+    MyRoot myRoot = new MyRoot();
+    myRoot.setMyHeader(myheader);
+    myRoot.setMyDetailList(detailList);
+    myRoot.setMyTrailer(myTrailer);
+
+    BeanPositional beanPositional = new BeanPositional();
+    beanPositional.parseToFile(myRoot, "/home/usuer/my-positional-file.txt");
+```
+
+## Generating Positional File
+Below an example how to read a positional file.
+```java
+    BeanPositional beanPositional = new BeanPositional();
+    MyRoot myRoot = beanPositional.parseFromFile(MyRoot.class, "/home/usuer/my-positional-file.txt");
+```
 
 ## Author
 
