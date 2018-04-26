@@ -10,8 +10,8 @@ a positional file.
 ## Releases
 |  Versions |    Date    |       Descriptions      |
 | ----------|------------|-------------------------|
-| 1.0.0     | 2018-03-25 | First usable version    |
 | 1.0.1     | 2018-03-26 | Added MIT License       |
+| 1.0.0     | 2018-03-25 | First usable version    |
 
 ## Specifications
 Sometimes we need to read and/or serialize positional files, and every time is a boring work to cut Strings 
