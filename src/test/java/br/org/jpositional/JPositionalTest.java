@@ -27,7 +27,7 @@ public class JPositionalTest {
         try {
             BeanPositional beanPositional = new BeanPositional();
             MyRoot myRoot1 = beanPositional.parseFromFile(MyRoot.class, "etc/txt/2018-04-10.txt");
-            beanPositional.parseToFile(myRoot1, "C:\\Users\\n01316994\\from-obj.txt");
+            beanPositional.parseToFile(myRoot1, "etc/txt/generated/from-obj.txt");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +66,7 @@ public class JPositionalTest {
         try {
             BeanPositional beanPositional = new BeanPositional();
             MyBeanWithDate myBeanWithDate = beanPositional.parseFromFile(MyBeanWithDate.class, "etc/txt/simple-positional.txt");
-            beanPositional.parseToFile(myBeanWithDate, "C:\\Users\\n01316994\\from-simple-positional.txt");
+            beanPositional.parseToFile(myBeanWithDate, "etc/txt/generated/from-simple-positional.txt");
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail();
@@ -78,7 +78,7 @@ public class JPositionalTest {
         try {
             BeanPositional beanPositional = new BeanPositional();
             List<MyBeanWithDate> myBeanWithDateList = beanPositional.parseManyFromFile(MyBeanWithDate.class, "etc/txt/many-simple-positional.txt");
-            beanPositional.parseManyToFile(myBeanWithDateList, "C:\\Users\\n01316994\\from-multiple-simple-positional.txt");
+            beanPositional.parseManyToFile(myBeanWithDateList, "etc/txt/generated/from-multiple-simple-positional.txt");
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail();
@@ -95,7 +95,7 @@ public class JPositionalTest {
             myBeanWithDate.setId(2);
 
             BeanPositional beanPositional = new BeanPositional();
-            beanPositional.parseToFile(myBeanWithDate, "C:\\Users\\n01316994\\from-simple-positional2.txt");
+            beanPositional.parseToFile(myBeanWithDate, "etc/txt/generated/from-simple-positional2.txt");
 
         } catch (Exception e) {
             e.printStackTrace();
