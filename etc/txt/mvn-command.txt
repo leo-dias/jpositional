@@ -1,0 +1,1 @@
+-DperformRelease=true clean deploy
