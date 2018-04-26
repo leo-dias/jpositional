@@ -20,6 +20,16 @@ Positional files are composed by:
 * Details
 * Trailer
 
+### Positional File Example
+
+```text
+0262710000000000000000042018ABCDEF               00676296000599LEONARDO                                                        
+1262713343228032345251000000000000000000000000000000000000000000     8COMPULSORIA0000000000000000000000000000000000000000000000
+1262711052967042345251000000000000000000000000000000000000000000     8000000000000000044431500080000000000000000000000000000000
+92627199999999999999990000002                                                                                                  
+
+``` 
+
 ## How to use?
 To use the JPositional in your maven project you need to add:
 ### Configure Repository URL 
