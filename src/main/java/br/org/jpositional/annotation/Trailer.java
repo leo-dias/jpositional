@@ -1,4 +1,4 @@
-package br.org.jpositional;
+package br.org.jpositional.annotation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

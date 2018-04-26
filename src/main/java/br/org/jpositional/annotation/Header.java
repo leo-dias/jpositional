@@ -1,4 +1,4 @@
-package br.org.jpositional;
+package br.org.jpositional.annotation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -15,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ElementType.FIELD})
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
-public @interface Detail {
+public @interface Header {
 
     Class<?>[] groups() default {};
 

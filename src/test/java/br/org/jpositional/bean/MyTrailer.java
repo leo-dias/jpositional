@@ -1,7 +1,7 @@
 package br.org.jpositional.bean;
 
-import br.org.jpositional.Direction;
-import br.org.jpositional.Line;
+import br.org.jpositional.annotation.domain.Direction;
+import br.org.jpositional.annotation.Line;
 
 public class MyTrailer {
 

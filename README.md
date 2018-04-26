@@ -1,6 +1,6 @@
-# **JPositional**
+# **JPositional Framework**
 
-JPositional is an open source Java Framework for marshalling and unmarshalling Java beans from
+JPositional Framework is an open source Java project for marshalling and unmarshalling Java beans from
 a positional file.
 
 ## Technologies
@@ -8,10 +8,11 @@ a positional file.
 * Maven
 
 ## Releases
-|  Versions |    Date    |       Descriptions      |
-| ----------|------------|-------------------------|
-| 1.0.1     | 2018-03-26 | Added MIT License       |
-| 1.0.0     | 2018-03-25 | First usable version    |
+|  Versions |    Date    |Descriptions                                                           |
+| ----------|------------|-----------------------------------------------------------------------|
+| 1.0.2     | 2018-03-26 | Wrapper Class, Complex Positional and Simple Positional support       |
+| 1.0.1     | 2018-03-26 | MIT License                                                           |
+| 1.0.0     | 2018-03-25 | First usable version                                                  |
 
 ## Specifications
 Sometimes we need to read and/or serialize positional files, and every time is a boring work to cut Strings 
@@ -35,6 +36,12 @@ Positional files are composed by:
 92627199999999999999990000002                                                                                                  
 
 ``` 
+where:
+* first line is the header
+* second and third lines are details
+* last line is the trailer 
+
+Always the first character will be the identification of the record type.
 
 ## How to use?
 To use the JPositional in your maven project you need to add:
@@ -52,16 +59,20 @@ To use the JPositional in your maven project you need to add:
 <dependency>
     <groupId>jpositional</groupId>
     <artifactId>br.org.jpositional</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 ### Configuring Bean
 To be able to generate or serialize positional files you need to configure four Java classes.
 Below an example of Root class, Header class, Detail class and Trailer class:
 
+### Complex Bean
+Complex Bean is a bean with children as you can see below:
 ### MyRoot
-Is a Java class file that contains Header, Details and Trailer
+Is a Java class file that contains Header, Details and Trailer. 
+This class has to be annotated as @ComplexPositional, because has children.
 ```java
+@ComplexPositional
 public class MyRoot {
 
     @Header(identify = "0")
@@ -139,10 +150,53 @@ Observation:
 The default direction attribute value is RIGHT, so you don't need to inform explicit. 
 ```
 
+### Simple Bean
+Simple Bean is a bean with no children, has only records, and need to be annotated with @SimplePositional.
+
+Below an example of simple positional file:
+```text
+120180426Abcd                 
+220180326Efghij               
+320180226Klmnopqrst           
+420180326Uvxywz               
+```
+where:
+* has only records
+
+Below an example of Simple Bean:
+
+```java
+    @SimplePositional
+    public class MySimpleBean {
+        @Line(begin = 0, end = 1)
+        private Integer id;
+    
+        @Line(begin = 1, end = 9)
+        @DateFormatter(format = "yyyyMMdd")
+        private LocalDate dt;
+    
+        @Line(begin = 9, end = 30, fill = " ")
+        private String desc;
+    }
+```
+
+## Wrapper Class
+JPositional is prepared to work with wrappers classes.
+It's not required any special configuration, JPositional identify automatically.   
+
+## Working with Date
+JPositional Framework works with java.util.Date, java.time.LocalDate and java.time.LocalDateTime for date fields.
+It's required to use @DateFormatter to convert to any date format.
+
 ## Validations
-JPositional give to you some validations, like:
+JPositional Framework give to you some validations, like:
+
+### NoAnnotationConfiguredException
+If you forgot to add @SimplePositional or @ComplexPositional, JPositional Framework will throws NoAnnotationConfiguredException.
+To fix it, add one of the annotation that you will work on.
+
 ### ValueSizeNotCorrectException
-if an attribute is configured like below and the attribute there are not the correct size, JPositional throws ValueSizeNotCorrectException:
+If an attribute is configured like below and the attribute there are not the correct size, JPositional throws ValueSizeNotCorrectException:
 ```java
     @Line(begin = 1, end = 20)
     private String companyName;

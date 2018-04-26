@@ -1,12 +1,12 @@
 package br.org.jpositional.bean;
 
-import br.org.jpositional.Direction;
-import br.org.jpositional.Line;
+import br.org.jpositional.annotation.domain.Direction;
+import br.org.jpositional.annotation.Line;
 
 public class MyHeader {
 
     @Line(begin = 0, end = 1)
-    private String tipoRegistro;
+    private Integer tipoRegistro;
 
     @Line(begin = 1, end = 6)
     private String codigoSiape;
@@ -35,11 +35,11 @@ public class MyHeader {
     @Line(begin = 74, end = 127, fill = " ")
     private String filler;
 
-    public String getTipoRegistro() {
+    public Integer getTipoRegistro() {
         return tipoRegistro;
     }
 
-    public void setTipoRegistro(String tipoRegistro) {
+    public void setTipoRegistro(Integer tipoRegistro) {
         this.tipoRegistro = tipoRegistro;
     }
 

@@ -1,5 +1,10 @@
 package br.org.jpositional;
 
+import br.org.jpositional.annotation.*;
+import br.org.jpositional.annotation.decorator.DateFormatter;
+import br.org.jpositional.annotation.domain.Direction;
+import br.org.jpositional.exception.NoAnnotationConfiguredException;
+import br.org.jpositional.exception.NoSimplePositionalClassSupportedException;
 import br.org.jpositional.exception.ValueSizeNotCorrectException;
 import br.org.jpositional.exception.ValueTooLongException;
 
@@ -9,8 +14,12 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Leonardo Dias de Oliveira
@@ -21,6 +30,41 @@ class ParseToFile {
     private static final String UNEXPECTED_ERROR_IN_CLASS = "Unexpected error in class %s. Error message: %s";
 
     void parse(Object object, String filePath) throws IOException {
+        final Class<?> aClass = object.getClass();
+        ComplexPositional complexPositional = aClass.getDeclaredAnnotation(ComplexPositional.class);
+        SimplePositional simplePositional = aClass.getAnnotation(SimplePositional.class);
+
+        if (complexPositional != null) {
+            writeComplexPositional(object, filePath);
+        } else if (simplePositional != null) {
+            writeSimplePositional(object, filePath);
+        } else {
+            throw new NoAnnotationConfiguredException(String.format("There are no positional configuration for class %s. Please, consider use @ComplexPositional or @SimplePositional annotation.", aClass.getName()));
+        }
+    }
+
+    void parseMany(List<?> objectList, String filePath) {
+        try (FileWriter fw = new FileWriter(filePath)) {
+            objectList.forEach(object -> {
+                final Class<?> aClass = object.getClass();
+                SimplePositional simplePositional = aClass.getAnnotation(SimplePositional.class);
+                if (simplePositional == null) {
+                    throw new NoSimplePositionalClassSupportedException();
+                }
+
+                try {
+                    writeFromFields(fw, object, object.getClass().getDeclaredFields());
+                    fw.write("\n");
+                } catch (Exception e) {
+                    throw new RuntimeException(String.format(UNEXPECTED_ERROR_IN_CLASS, this.getClass().getName(), e.getMessage()));
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(String.format(UNEXPECTED_ERROR_IN_CLASS, this.getClass().getName(), e.getMessage()));
+        }
+    }
+
+    private void writeComplexPositional(Object object, String filePath) throws IOException {
         Field[] fields = object.getClass().getDeclaredFields();
         try (FileWriter fw = new FileWriter(filePath)) {
             Arrays.stream(fields).forEach(field -> {
@@ -28,6 +72,17 @@ class ParseToFile {
                 write(object, field, field.getAnnotation(Detail.class), fw);
                 write(object, field, field.getAnnotation(Trailer.class), fw);
             });
+        }
+    }
+
+    private void writeSimplePositional(Object object, String filePath) throws IOException {
+        Field[] fields = object.getClass().getDeclaredFields();
+        try (FileWriter fw = new FileWriter(filePath)) {
+            try {
+                writeFromFields(fw, object, fields);
+            } catch (Exception e) {
+                throw new RuntimeException(String.format(UNEXPECTED_ERROR_IN_CLASS, this.getClass().getName(), e.getMessage()));
+            }
         }
     }
 
@@ -60,7 +115,6 @@ class ParseToFile {
         }
     }
 
-
     private void writeFromFields(FileWriter fw, Object object, Field[] fields) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, IOException {
         for (Field field : fields) {
             Line line = field.getDeclaredAnnotation(Line.class);
@@ -68,17 +122,38 @@ class ParseToFile {
                 Method methodHeader = object.getClass().getDeclaredMethod(methodGetName(field));
                 Object invoked = methodHeader.invoke(object);
                 if (invoked != null) {
-                    String value = invoked.toString();
-                    int size = line.end() - line.begin();
-                    validateMaxSize(field, value, size);
-                    if (!line.fill().isEmpty()) {
-                        value = fill(value, line.fill(), size, line.direction());
+                    DateFormatter dateFormatter = field.getDeclaredAnnotation(DateFormatter.class);
+                    if (dateFormatter != null) {
+                        writeDateFormat(fw, field, line, invoked, dateFormatter);
+                    } else {
+                        validateAndWrite(fw, field, line, invoked.toString());
                     }
-                    validateCorrectSize(field, value, size);
-                    fw.write(value);
                 }
             }
         }
+    }
+
+    private void writeDateFormat(FileWriter fw, Field field, Line line, Object invoked, DateFormatter dateFormatter) throws IOException {
+        String instanceName = field.getType().getName();
+        if ("java.util.Date".equals(instanceName)) {
+            SimpleDateFormat formatter = new SimpleDateFormat(dateFormatter.format());
+            String value = formatter.format(invoked);
+            validateAndWrite(fw, field, line, value);
+        } else if ("java.time.LocalDate".equals(instanceName) || "java.time.LocalDateTime".equals(instanceName)) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormatter.format());
+            String value = ((LocalDate) invoked).format(formatter);
+            validateAndWrite(fw, field, line, value);
+        }
+    }
+
+    private void validateAndWrite(FileWriter fw, Field field, Line line, String value) throws IOException {
+        int size = line.end() - line.begin();
+        validateMaxSize(field, value, size);
+        if (!line.fill().isEmpty()) {
+            value = fill(value, line.fill(), size, line.direction());
+        }
+        validateCorrectSize(field, value, size);
+        fw.write(value);
     }
 
     private String methodGetName(Field field) {

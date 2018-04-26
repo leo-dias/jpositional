@@ -1,6 +1,6 @@
 package br.org.jpositional.bean;
 
-import br.org.jpositional.Line;
+import br.org.jpositional.annotation.Line;
 
 public class MyDetail {
 
