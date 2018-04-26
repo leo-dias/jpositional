@@ -1,7 +1,7 @@
 package br.org.jpositional.bean;
 
-import br.org.jpositional.Header;
 import br.org.jpositional.Detail;
+import br.org.jpositional.Header;
 import br.org.jpositional.Trailer;
 
 import java.util.List;
