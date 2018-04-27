@@ -38,7 +38,7 @@ class ParseToFile {
         }
     }
 
-    void parseMany(List<?> objectList, String filePath) {
+    void parseMany(List<?> objectList, String filePath) throws IOException {
         try (FileWriter fw = new FileWriter(filePath)) {
             objectList.forEach(object -> {
                 final Class<?> aClass = object.getClass();
@@ -54,8 +54,6 @@ class ParseToFile {
                     throw new UnexpectedErrorException(this.getClass(), e.getMessage());
                 }
             });
-        } catch (IOException e) {
-            throw new UnexpectedErrorException(this.getClass(), e.getMessage());
         }
     }
 
