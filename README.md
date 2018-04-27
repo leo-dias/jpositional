@@ -10,6 +10,7 @@ a positional file.
 ## Releases
 |  Versions |    Date    |Descriptions                                                           |
 | ----------|------------|-----------------------------------------------------------------------|
+| 1.0.3     | 2018-03-27 | Working with correct exceptions                                       |
 | 1.0.2     | 2018-03-26 | Wrapper Class, Complex Positional and Simple Positional support       |
 | 1.0.1     | 2018-03-26 | MIT License                                                           |
 | 1.0.0     | 2018-03-25 | First usable version                                                  |
@@ -59,7 +60,7 @@ To use the JPositional in your maven project you need to add:
 <dependency>
     <groupId>jpositional</groupId>
     <artifactId>br.org.jpositional</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 ### Configuring Bean
