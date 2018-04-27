@@ -3,10 +3,7 @@ package br.org.jpositional;
 import br.org.jpositional.annotation.*;
 import br.org.jpositional.annotation.decorator.DateFormatter;
 import br.org.jpositional.annotation.domain.Direction;
-import br.org.jpositional.exception.NoAnnotationConfiguredException;
-import br.org.jpositional.exception.NoSimplePositionalClassSupportedException;
-import br.org.jpositional.exception.ValueSizeNotCorrectException;
-import br.org.jpositional.exception.ValueTooLongException;
+import br.org.jpositional.exception.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,8 +23,6 @@ import java.util.List;
  */
 
 class ParseToFile {
-
-    private static final String UNEXPECTED_ERROR_IN_CLASS = "Unexpected error in class %s. Error message: %s";
 
     void parse(Object object, String filePath) throws IOException {
         final Class<?> aClass = object.getClass();
@@ -56,11 +51,11 @@ class ParseToFile {
                     writeFromFields(fw, object, object.getClass().getDeclaredFields());
                     fw.write("\n");
                 } catch (Exception e) {
-                    throw new RuntimeException(String.format(UNEXPECTED_ERROR_IN_CLASS, this.getClass().getName(), e.getMessage()));
+                    throw new UnexpectedErrorException(this.getClass(), e.getMessage());
                 }
             });
         } catch (IOException e) {
-            throw new RuntimeException(String.format(UNEXPECTED_ERROR_IN_CLASS, this.getClass().getName(), e.getMessage()));
+            throw new UnexpectedErrorException(this.getClass(), e.getMessage());
         }
     }
 
@@ -81,7 +76,7 @@ class ParseToFile {
             try {
                 writeFromFields(fw, object, fields);
             } catch (Exception e) {
-                throw new RuntimeException(String.format(UNEXPECTED_ERROR_IN_CLASS, this.getClass().getName(), e.getMessage()));
+                throw new UnexpectedErrorException(this.getClass(), e.getMessage());
             }
         }
     }
@@ -94,13 +89,13 @@ class ParseToFile {
                 if (invoked != null) {
 
                     if (invoked instanceof Collection) {
-                        Collection collection = (Collection) invoked;
+                        Collection<Object> collection = (Collection) invoked;
                         collection.forEach(record -> {
                             try {
                                 writeFromFields(fw, record, record.getClass().getDeclaredFields());
                                 fw.write("\n");
                             } catch (Exception e) {
-                                throw new RuntimeException(String.format(UNEXPECTED_ERROR_IN_CLASS, this.getClass().getName(), e.getMessage()));
+                                throw new UnexpectedErrorException(this.getClass(), e.getMessage());
                             }
                         });
                     } else {
@@ -110,7 +105,7 @@ class ParseToFile {
 
                 }
             } catch (Exception e) {
-                throw new RuntimeException(String.format(UNEXPECTED_ERROR_IN_CLASS, this.getClass().getName(), e.getMessage()));
+                throw new UnexpectedErrorException(this.getClass(), e.getMessage());
             }
         }
     }

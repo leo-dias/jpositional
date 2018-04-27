@@ -2,8 +2,10 @@ package br.org.jpositional;
 
 import br.org.jpositional.annotation.*;
 import br.org.jpositional.annotation.decorator.DateFormatter;
+import br.org.jpositional.exception.MandatoryDateFormatterException;
 import br.org.jpositional.exception.NoAnnotationConfiguredException;
 import br.org.jpositional.exception.NoSimplePositionalClassSupportedException;
+import br.org.jpositional.exception.UnexpectedErrorException;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -16,7 +18,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -26,9 +27,6 @@ import java.util.stream.Stream;
  */
 
 class ParseFromFile {
-
-    private static final String UNEXPECTED_ERROR_IN_CLASS = "Unexpected error in class %s. Error message: %s";
-    private static final String MANDATORY_TO_USE_DATE_FORMATTER = "To use %s class is mandatory to use @DateFormatter.";
 
     <T> T parse(Class<T> clazz, String filePath) throws IOException {
 
@@ -81,18 +79,18 @@ class ParseFromFile {
                     field.setAccessible(true);
                     field.set(multiBean, convertToInstance(field, line, s));
                 } catch (Exception e) {
-                    throw new RuntimeException(String.format(UNEXPECTED_ERROR_IN_CLASS, this.getClass().getName(), e.getMessage()));
+                    throw new UnexpectedErrorException(this.getClass(), e.getMessage());
                 }
             }
         }
     }
 
     private <T> void processSimplePositional(Stream<String> stream, T rootBean) {
-        stream.forEach(s -> iterateDeclaredFields(s, (T) rootBean));
+        stream.forEach(s -> iterateDeclaredFields(s, rootBean));
     }
 
     private <T> void processComplexPositional(Stream<String> stream, T rootBean) {
-        List list = new ArrayList();
+        List<Object> list = new ArrayList<>();
 
         stream.forEach(s -> {
             for (Field f : rootBean.getClass().getDeclaredFields()) {
@@ -100,13 +98,13 @@ class ParseFromFile {
                     processBeanField(s, rootBean, f);
                     processBeanFieldList(list, s, rootBean, f);
                 } catch (Exception e) {
-                    throw new RuntimeException(String.format(UNEXPECTED_ERROR_IN_CLASS, this.getClass().getName(), e.getMessage()));
+                    throw new UnexpectedErrorException(this.getClass(), e.getMessage());
                 }
             }
         });
     }
 
-    private <T> void processBeanField(String sb, T rootBean, Field f) throws Exception {
+    private <T> void processBeanField(String sb, T rootBean, Field f) throws IllegalAccessException, NoSuchFieldException, ParseException {
         Header header = f.getAnnotation(Header.class);
         if (header != null && header.identify().equals(sb.substring(0, 1))) {
             process(sb, rootBean, f);
@@ -118,8 +116,8 @@ class ParseFromFile {
         }
     }
 
-    private <T> void process(String sb, T rootBean, Field f) throws Exception {
-        Class c = f.getType();
+    private <T> void process(String sb, T rootBean, Field f) throws IllegalAccessException, NoSuchFieldException, ParseException {
+        Class<?> c = f.getType();
         Object obj = createInstance(c);
         fillObject(c, c.getDeclaredFields(), sb, obj);
 
@@ -127,7 +125,7 @@ class ParseFromFile {
         f.set(rootBean, obj);
     }
 
-    private <T> void processBeanFieldList(List list, String sb, T rootBean, Field f) throws Exception {
+    private <T> void processBeanFieldList(List<Object> list, String sb, T rootBean, Field f) throws IllegalAccessException, InstantiationException, NoSuchFieldException, ParseException {
         Detail detail = f.getAnnotation(Detail.class);
         if (detail != null && detail.identify().equals(sb.substring(0, 1))) {
             ParameterizedType type = (ParameterizedType) f.getGenericType();
@@ -155,11 +153,11 @@ class ParseFromFile {
         return newInstance;
     }
 
-    private void fillObject(Class<?> classe, Field[] fields, String sb, Object obj) throws NoSuchFieldException, IllegalAccessException, ClassNotFoundException, ParseException {
+    private void fillObject(Class<?> clazz, Field[] fields, String sb, Object obj) throws NoSuchFieldException, IllegalAccessException, ParseException {
         for (Field f2 : fields) {
             Line line = f2.getAnnotation(Line.class);
             if (line != null) {
-                Field field = classe.getDeclaredField(f2.getName());
+                Field field = clazz.getDeclaredField(f2.getName());
                 field.setAccessible(true);
 
                 field.set(obj, convertToInstance(field, line, sb));
@@ -193,21 +191,21 @@ class ParseFromFile {
             if (dateFormatter != null) {
                 return parseToDate(s.substring(line.begin(), line.end()), dateFormatter.format());
             }
-            throw new RuntimeException(String.format(MANDATORY_TO_USE_DATE_FORMATTER, "java.util.Date"));
+            throw new MandatoryDateFormatterException("java.util.Date");
 
         } else if ("java.time.LocalDate".equals(instanceName)) {
             DateFormatter dateFormatter = f.getAnnotation(DateFormatter.class);
             if (dateFormatter != null) {
                 return LocalDate.parse(s.substring(line.begin(), line.end()), DateTimeFormatter.ofPattern(dateFormatter.format()));
             }
-            throw new RuntimeException(String.format(MANDATORY_TO_USE_DATE_FORMATTER, "java.time.LocalDate"));
+            throw new MandatoryDateFormatterException("java.time.LocalDate");
 
         } else if ("java.time.LocalDateTime".equals(instanceName)) {
             DateFormatter dateFormatter = f.getAnnotation(DateFormatter.class);
             if (dateFormatter != null) {
                 return LocalDateTime.parse(s.substring(line.begin(), line.end()), DateTimeFormatter.ofPattern(dateFormatter.format()));
             }
-            throw new RuntimeException(String.format(MANDATORY_TO_USE_DATE_FORMATTER, "java.time.LocalDateTime"));
+            throw new MandatoryDateFormatterException("java.time.LocalDateTime");
 
         } else {
             return s.substring(line.begin(), line.end());
