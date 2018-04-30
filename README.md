@@ -7,14 +7,6 @@ a positional file.
 * JDK 1.8
 * Maven
 
-## Releases
-|  Versions |    Date    |Descriptions                                                           |
-| ----------|------------|-----------------------------------------------------------------------|
-| 1.0.3     | 2018-03-27 | Working with correct exceptions                                       |
-| 1.0.2     | 2018-03-26 | Wrapper Class, Complex Positional and Simple Positional support       |
-| 1.0.1     | 2018-03-26 | MIT License                                                           |
-| 1.0.0     | 2018-03-25 | First usable version                                                  |
-
 ## Specifications
 Sometimes we need to read and/or serialize positional files, and every time is a boring work to cut Strings 
 and concatenate to generate or read these kind of files.
