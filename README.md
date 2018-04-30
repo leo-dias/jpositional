@@ -197,7 +197,7 @@ You have mapped the companyName to receive 20 characters.
     @Line(begin = 1, end = 20)
     private String companyName;
 ```
-And try to put small text like:
+And trying to put small text like:
 ```java
     String companyName = "Abc";
 ```
