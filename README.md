@@ -190,10 +190,18 @@ To fix it, add one of the annotation that you will work on.
 
 ### ValueSizeNotCorrectException
 If an attribute is configured like below and the attribute there are not the correct size, JPositional throws ValueSizeNotCorrectException:
+
+Example:
+You have mapped the companyName to receive 20 characters.
 ```java
     @Line(begin = 1, end = 20)
     private String companyName;
 ```
+And try to put small text like:
+```java
+    String companyName = "Abc";
+```
+When you try to generate a positional file, JPositional will throws ValueSizeNotCorrectException.
 To fix this, you need to configure the fill attribute.
 ```java
     @Line(begin = 1, end = 20, fill=" ")
