@@ -251,7 +251,7 @@ Below an example how to generate a positional file from bean.
     beanPositional.parseToFile(myRoot, "/home/user/my-positional-file.txt");
 ```
 
-## Generating Positional File
+## Reading Positional File
 Below an example how to read a positional file.
 ```java
     BeanPositional beanPositional = new BeanPositional();
