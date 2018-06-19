@@ -140,7 +140,7 @@ public class MyTrailer {
 ```
 ```text
 Observation:
-The default direction attribute value is RIGHT, so you don't need to inform explicit. 
+The default direction attribute value is RIGHT, so you don't need to inform explicitly. 
 ```
 
 ### Simple Bean
