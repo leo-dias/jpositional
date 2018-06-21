@@ -1,6 +1,6 @@
 # **JPositional Framework**
 
-JPositional Framework is an open source Java project for marshalling and unmarshalling Java beans from
+JPositional Framework is an open source Java project for marshaling and unmarshalling Java beans from
 a positional file.
 
 ## Technologies
@@ -9,10 +9,10 @@ a positional file.
 
 ## Specifications
 Sometimes we need to read and/or serialize positional files, and every time is a boring work to cut Strings 
-and concatenate to generate or read these kind of files.
- 
-This open source project provide the easy way to read and serialize positional files, leaving developers 
-focus only on business rules.
+and concatenate to generate or read these kinds of files.
+
+This open source project provides the easy way to read and serialize positional files, leaving developers to focus 
+only on business rules.
 
 ## Positional File Structure
 Positional files are composed by:
@@ -62,8 +62,8 @@ Below an example of Root class, Header class, Detail class and Trailer class:
 ### Complex Bean
 Complex Bean is a bean with children as you can see below:
 ### MyRoot
-Is a Java class file that contains Header, Details and Trailer. 
-This class has to be annotated as @ComplexPositional, because has children.
+Is a Java class file that contains Header, Details, and Trailer. 
+This class has to be annotated as @ComplexPositional because has children.
 ```java
 @ComplexPositional
 public class MyRoot {
@@ -175,24 +175,24 @@ Below an example of Simple Bean:
 
 ## Wrapper Class
 JPositional is prepared to work with wrappers classes.
-It's not required any special configuration, JPositional identify automatically.   
+It's not required any special configuration, JPositional identifies automatically.   
 
 ## Working with Date
 JPositional Framework works with java.util.Date, java.time.LocalDate and java.time.LocalDateTime for date fields.
 It's required to use @DateFormatter to convert to any date format.
 
 ## Validations
-JPositional Framework give to you some validations, like:
+JPositional Framework gives you some validations, like:
 
 ### NoAnnotationConfiguredException
-If you forgot to add @SimplePositional or @ComplexPositional, JPositional Framework will throws NoAnnotationConfiguredException.
-To fix it, add one of the annotation that you will work on.
+If you forgot to add @SimplePositional or @ComplexPositional, JPositional Framework will throw NoAnnotationConfiguredException.
+To fix it, add one of the annotations that you will work on.
 
 ### ValueSizeNotCorrectException
 If an attribute is configured like below and the attribute there are not the correct size, JPositional throws ValueSizeNotCorrectException:
 
 Example:
-You have mapped the companyName to receive 20 characters.
+You have mapped the companyName attribute to receive 20 characters.
 ```java
     @Line(begin = 1, end = 20)
     private String companyName;
@@ -201,13 +201,13 @@ And trying to put small text like:
 ```java
     String companyName = "Abc";
 ```
-When you try to generate a positional file, JPositional will throws ValueSizeNotCorrectException.
+When you try to generate a positional file, JPositional will throw ValueSizeNotCorrectException.
 To fix this, you need to configure the fill attribute.
 ```java
     @Line(begin = 1, end = 20, fill=" ")
     private String companyName;
 ```
-Now JPositional knows if the attribute is less than (end - beging), need to fill with black space.
+Now JPositional knows if the attribute is less than (end - begin), need to fill with black space.
 
 ### ValueTooLongException
 if an attribute is configured like below and the attribute is receiving a String length greater than (end - begin), JPositional throws ValueTooLongException:
@@ -218,7 +218,7 @@ if an attribute is configured like below and the attribute is receiving a String
 To fix this, you need to review your String.
 
 ## Generating Positional File
-Below an example how to generate a positional file from bean.
+Below an example of how to generate a positional file from a bean.
 ```java
     MyHeader myHeader = new MyHeader();
     myHeader.setIdentify("0");
@@ -252,7 +252,7 @@ Below an example how to generate a positional file from bean.
 ```
 
 ## Reading Positional File
-Below an example how to read a positional file.
+Below an example of how to read a positional file.
 ```java
     BeanPositional beanPositional = new BeanPositional();
     MyRoot myRoot = beanPositional.parseFromFile(MyRoot.class, "/home/user/my-positional-file.txt");
